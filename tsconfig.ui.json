@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES2021", "module": "ESNext", "moduleResolution": "node",
+    "jsx": "react-jsx", "strict": true, "noEmit": true,
+    "esModuleInterop": true, "skipLibCheck": true,
+    "lib": ["ES2021", "DOM"], "types": ["react", "react-dom"]
+  },
+  "include": ["src/ui/**/*.tsx", "src/electron/ipc.ts"]
+}

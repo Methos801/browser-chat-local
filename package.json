@@ -1,0 +1,101 @@
+{
+  "name": "browser-chat",
+  "version": "0.2.2",
+  "private": true,
+  "description": "Cross-platform desktop chat that connects to local AI (oMLX / Ollama / LM Studio) or network APIs (Anthropic).",
+  "main": "dist/main.js",
+  "author": "jacobdavis",
+  "license": "MIT",
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build:electron": "tsc",
+    "build:ui": "node scripts/build-ui.mjs",
+    "build": "npm run clean && npm run build:electron && npm run build:ui && node scripts/third-party-notices.cjs",
+    "start": "npm run build && electron .",
+    "dev": "npm run build && electron .",
+    "smoke": "npm run build:electron && node scripts/smoke.cjs",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.ui.json",
+    "package": "npm run build && electron-builder",
+    "verify": "npm run typecheck && npm run smoke && node scripts/phase3-smoke.cjs && node scripts/features-smoke.cjs",
+    "smoke:desktop": "npm run build && electron scripts/desktop-smoke.cjs",
+    "package:mac": "npm run build && electron-builder --mac dmg --arm64",
+    "package:win": "npm run build && electron-builder --win nsis --x64",
+    "smoke:features": "npm run build && electron scripts/features-desktop.cjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "exceljs": "^4.4.0",
+    "jszip": "^3.10.2",
+    "lucide-react": "^1.59.0",
+    "mammoth": "^1.13.0",
+    "npm": "^11.21.1",
+    "pdfjs-dist": "^6.4.299",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "sql.js": "^1.15.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "electron": "^44.9.0",
+    "electron-builder": "^26.15.3",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.5.0"
+  },
+  "build": {
+    "appId": "com.jacobdavis.browserchat",
+    "productName": "Browser Chat",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "src/ui/index.html",
+      "src/ui/styles.css",
+      "src/ui/bundle.js",
+      "mcp.config.json",
+      "package.json",
+      "THIRD_PARTY_NOTICES.txt"
+    ],
+    "asarUnpack": [
+      "node_modules/sql.js/dist/*.wasm",
+      "node_modules/npm/**/*"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraResources": [
+      {
+        "from": "node_modules/npm",
+        "to": "tool-runtime/npm",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "node_modules/npm/node_modules",
+        "to": "tool-runtime/npm/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  }
+}
