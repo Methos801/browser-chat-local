@@ -1,0 +1,2 @@
+Interface: Browser Chat 0.2.2, copyright holder jacobdavis. See LICENSE.
+Screenshots of the original renderer with a local test provider. The packing list was written for this example. No external artwork was added.
