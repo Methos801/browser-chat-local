@@ -4,7 +4,7 @@
   "private": true,
   "description": "Cross-platform desktop chat that connects to local AI (oMLX / Ollama / LM Studio) or network APIs (Anthropic).",
   "main": "dist/main.js",
-  "author": "jacobdavis",
+  "author": "Methos801",
   "license": "MIT",
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
